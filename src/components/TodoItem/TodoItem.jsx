@@ -3,19 +3,24 @@ import TodoItemList from "../TodoItemList/TodoItemList";
 import "./TodoItem.css";
 
 const TodoItem = (props) => {
-  const { todos, makeCheck, makeLike } = props;
+  const { todos, onToggleLike, onToggleImp, onDeleteItem } = props;
   return (
     <ul className="app-list list-group">
       {todos.map((todo) => {
         return (
           <TodoItemList
-            id={todo.id}
+            key={todo.id}
             title={todo.title}
-            makeCheck={() => {
-              makeCheck(todo.id);
+            important={todo.important}
+            like={todo.like}
+            onToggleLike={() => {
+              onToggleLike(todo.id);
             }}
-            makeLike={() => {
-              makeLike(todo.id);
+            onToggleImp={() => {
+              onToggleImp(todo.id);
+            }}
+            onDeleteItem={() => {
+              onDeleteItem(todo.id);
             }}
           />
         );
