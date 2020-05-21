@@ -1,22 +1,22 @@
 import React from "react";
-import ItemList from "../item-list";
+
 import Header from "../header";
 import RandomPlanet from "../random-planet";
 import ErrorButton from "../error-button";
 import ErrorComponent from "../error-component";
-import PersonDetails from "../person-details";
+
+import PeoplePage from "../../pages/PeoplePage";
 
 import "./app.css";
+import PlanetPage from "../../pages/PlanetPage";
+import ShipPage from "../../pages/ShipPage";
 
 class App extends React.Component {
   state = {
     showRandomPlanet: true,
     error: false,
-    selectedItem: null,
   };
-  onSelectedItem = (id) => {
-    this.setState({ selectedItem: id });
-  };
+
   toggleRandomPlanet = () => {
     this.setState((state) => {
       return {
@@ -47,14 +47,9 @@ class App extends React.Component {
         </button>
         <ErrorButton />
 
-        <div className="row mb2">
-          <div className="col-md-6">
-            <ItemList onSelectedItem={this.onSelectedItem} />
-          </div>
-          <div className="col-md-6">
-            <PersonDetails selectedItem={this.state.selectedItem} />
-          </div>
-        </div>
+        <PeoplePage />
+        <PlanetPage />
+        <ShipPage />
       </div>
     );
   }
