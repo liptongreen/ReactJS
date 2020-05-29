@@ -11,6 +11,10 @@ import SwapiService from "../../services/swapi-service";
 import "./app.css";
 import PlanetPage from "../../pages/PlanetPage";
 import ShipPage from "../../pages/ShipPage";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import PersonPage from "../../pages/PersonPage";
+import PlanPage from "../../pages/PlanPage";
+import StarPage from "../../pages/StarPage";
 
 const swapiService = new SwapiService();
 
@@ -37,10 +41,9 @@ class App extends React.Component {
     if (this.state.error) {
       return <ErrorComponent />;
     }
-    return (
-      <SwapiProvider value={swapiService}>
-        <div>
-          <Header />
+    const RandomBlock = () => {
+      return (
+        <>
           {planet}
 
           <button
@@ -50,12 +53,25 @@ class App extends React.Component {
             Toggle Random Planet
           </button>
           <ErrorButton />
-
-          <PeoplePage />
-          <PlanetPage />
-
-          <ShipPage />
-        </div>
+        </>
+      );
+    };
+    return (
+      <SwapiProvider value={swapiService}>
+        <Router>
+          <Header />
+          <Switch>
+            <Route path="/" component={RandomBlock} exact />
+            <Route path="/welcome" render={() => <h1>Welcome</h1>} />
+            <Route path="/people" component={PeoplePage} exact />
+            <Route path="/planet" component={PlanetPage} exact />
+            <Route path="/ship" component={ShipPage} exact />
+            <Route path="/people/:id" component={PersonPage} />
+            <Route path="/planet/:id" component={PlanPage} />
+            <Route path="/ship/:id" component={StarPage} />
+            <Route render={() => <h1>Page not found</h1>} />
+          </Switch>
+        </Router>
       </SwapiProvider>
     );
   }

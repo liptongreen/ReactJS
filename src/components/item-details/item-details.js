@@ -12,16 +12,23 @@ class ItemDetails extends Component {
     error: false,
     loading: false,
   };
-
-  componentDidUpdate(prevProps) {
+  componentDidMount() {
+    this.setState({ loading: true });
+    this.props.getPerson(this.props.selectedItem).then((item) => {
+      this.setState({ item: item, loading: false });
+    });
+  }
+  /*   componentDidUpdate(prevProps) {
     if (prevProps.selectedItem !== this.props.selectedItem) {
       this.setState({ loading: true });
       this.props.getPerson(this.props.selectedItem).then((item) => {
         this.setState({ item: item, loading: false });
       });
     }
-  }
-
+  } */
+  static defaultProps = {
+    selectedItem: 3,
+  };
   render() {
     const { error, item, loading } = this.state;
     const { getMessage, getImage, children } = this.props;
@@ -70,5 +77,12 @@ const ViewItem = (props) => {
     </>
   );
 };
-
+ItemDetails.propTypes = {
+  selectedItem: (props, propName, componentName) => {
+    if (typeof props | (propName === "number")) {
+      return null;
+    }
+    return new TypeError(`${componentName} - ${propName} must be number`);
+  },
+};
 export default ItemDetails;
