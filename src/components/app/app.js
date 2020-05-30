@@ -1,58 +1,30 @@
 import React from "react";
-
 import Header from "../header";
-import RandomPlanet from "../random-planet";
-import ErrorButton from "../error-button";
-import ErrorComponent from "../error-component";
-
-import PeoplePage from "../../pages/PeoplePage";
-
+import Main from "../main";
+import Services from "../services";
 import "./app.css";
-import PlanetPage from "../../pages/PlanetPage";
-import ShipPage from "../../pages/ShipPage";
+import OurPartner from "../ourpartner";
+import OurTeam from "../ourteam";
+import NoName from "../noname";
+import Bottom from "../bottom";
+import Team from "../team";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-class App extends React.Component {
-  state = {
-    showRandomPlanet: true,
-    error: false,
-  };
-
-  toggleRandomPlanet = () => {
-    this.setState((state) => {
-      return {
-        showRandomPlanet: !state.showRandomPlanet,
-      };
-    });
-  };
-
-  componentDidCatch(error) {
-    console.error(error);
-    this.setState({ error: true });
-  }
-  render() {
-    const planet = this.state.showRandomPlanet ? <RandomPlanet /> : null;
-    if (this.state.error) {
-      return <ErrorComponent />;
-    }
-    return (
-      <div>
+const App = () => {
+  return (
+    <div className="wrapper">
+      <Router>
         <Header />
-        {planet}
-
-        <button
-          className="toggle-planet btn btn-warning btn-lg mb-4"
-          onClick={this.toggleRandomPlanet}
-        >
-          Toggle Random Planet
-        </button>
-        <ErrorButton />
-
-        <PeoplePage />
-        <PlanetPage />
-        <ShipPage />
-      </div>
-    );
-  }
-}
+        <Switch>
+          <Route path="/" component={Main} exact />
+          <Route path="/services" component={Services} />
+          <Route path="/aboutus" component={OurTeam} />
+          <Route render={() => <h1>Page not found</h1>} />
+        </Switch>
+        <Bottom />
+      </Router>
+    </div>
+  );
+};
 
 export default App;
